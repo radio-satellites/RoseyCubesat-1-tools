@@ -12,7 +12,7 @@ You need to have some frames from RoseyCubesat-1 to decode. SatNogs DB has this.
 # Example decode:
 
 1. Make sure that the file "original.txt" is present and you have imagery data in it. 
-2. Install dependencies, PIL and cv2 with the following commands: pip install Pillow, and pip install opencv-python. 
+2. Install dependencies, PIL and cv2 with the following commands: pip install Pillow and pip install opencv-python. 
 3. Run "decoder.py"
 4. You should have imagery!
 
