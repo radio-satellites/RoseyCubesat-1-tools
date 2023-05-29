@@ -7,7 +7,7 @@ Decode data from RoseyCubesat-1!
 
 There's a file in the repo called "original.txt." This can be used for testing. 
 
-You need to have some frames from RoseyCubesat-1 to decode. SatNogs DB has this. The script reads satnogs frames from a file (always "original.txt"), and then dumps them to an image called "output.png." This is very much a work-in-progress, and things may change. 
+You need to have some frames from RoseyCubesat-1 to decode. SatNogs DB has this. The script reads satnogs frames from a file (always "original.txt"), and then dumps them to three images called output_rgb.png, output_raw.png, and output_bw.png. RGB contains the usual composite, the RAW file has the original non debayered imagery, and output_bw has the black and white calibrated imagery, which is debayered. This is very much a work-in-progress, and things may change. 
 
 # Example decode:
 
