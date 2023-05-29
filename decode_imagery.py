@@ -77,8 +77,10 @@ for i in range(len(f_frames)):
     frame = f_frames[i]
     parse(frame)
 
-im.save("output.png")
-srcBGR = cv2.imread("output.png")
+im.save("output_raw.png")
+srcBGR = cv2.imread("output_raw.png",0)
 rgb= cv2.cvtColor(srcBGR, cv2.COLOR_BayerGR2RGB)
+bw = cv2.cvtColor(srcBGR, cv2.COLOR_BayerGR2GRAY)
 cv2.imwrite('output_rgb.png', rgb)
+cv2.imwrite('output_bw.png', bw)
 
