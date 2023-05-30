@@ -32,11 +32,10 @@ def chunk2xy(chunk_num):
     return x_image,y_image
 
 def write_pixel(imager,chunk_num):
-    
+    x,y = chunk2xy(chunk_num)
     for i in range(80):
         #print(imager[i])
         try:
-            x,y = chunk2xy(chunk_num)
             im.putpixel((x+i,y),(imager[i],imager[i],imager[i]))
         except Exception as e:
             print(e)
