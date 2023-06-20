@@ -14,11 +14,15 @@ f.close()
 
 f_frames = []
 
+ids_frames = list(range(2160))
+
 
 for i in range(len(f_lines)):
     line = f_lines[i]
     f_frames.append(line[20:])
 
+
+print("Frame count: "+str(len(f_lines)))
 
 #parsing
 
@@ -65,6 +69,12 @@ uint8_t pixels[80]; //pixel data
         elementID = int.from_bytes(frame_bytes[5:7], "big")
         imagery = frame_bytes[7:] #imagery data
         write_pixel(imagery,elementID)
+        try:
+            ids_frames.remove(elementID)
+        except:
+            #print(elementID)
+            pass
+        
         #print(packetID)
         #print("WRITE FRAME!",elementID,chunk2xy(elementID))
         
@@ -83,3 +93,25 @@ bw = cv2.cvtColor(srcBGR, cv2.COLOR_BayerGR2GRAY)
 cv2.imwrite('output_rgb.png', rgb)
 cv2.imwrite('output_bw.png', bw)
 
+#post process - fill in blanks
+
+im_blank = Image.open("output_raw.png")
+pixels = list(im_blank.getdata())
+for z in range(len(ids_frames)):
+    bad_id = ids_frames[z]
+    x,y = chunk2xy(bad_id)
+    for i in range(80):
+        try:
+            im_blank.putpixel((x+i,y),(pixels[(y-1)*480+x+i][0],pixels[(y-1)*480+x+i][0],pixels[(y-1)*480+x+i][0]))
+        except:
+            print("Can't correct error")
+
+im_blank.save("output_smooth_raw.png")
+
+#post process color
+
+srcBGR = cv2.imread("output_smooth_raw.png",0)
+rgb= cv2.cvtColor(srcBGR, cv2.COLOR_BayerGR2RGB)
+bw = cv2.cvtColor(srcBGR, cv2.COLOR_BayerGR2GRAY)
+cv2.imwrite('output_smooth_rgb.png', rgb)
+cv2.imwrite('output_smooth_bw.png', bw)
